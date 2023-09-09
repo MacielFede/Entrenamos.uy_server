@@ -1,5 +1,6 @@
 <%@ page import="java.util.Map" %>
-<%@ page import="dataTypes.DtInstitute" %><%--
+<%@ page import="dataTypes.DtInstitute" %>
+<%@ page import="dataTypes.DtActivity" %><%--
   Created by IntelliJ IDEA.
   User: Fede Maciel
   Date: 7/9/2023
@@ -64,16 +65,6 @@
       <button type="submit" class="btn btn-success" disabled>Confirmar registro</button>
     </form>
   </main>
-  <script>
-  function setSelectedInstitute(institutes){
-	    console.log(institutes)
-	    const instit = '<%= institutes %>'
-	    console.log(instit)
-	    // let htmlToAppend = ''
-	    // for (let activity ){
-	    //
-	    // }
-	}
-  </script>
+  <script type="module" src="javascript/registrationToClass.js"></script>
 </body>
 </html>

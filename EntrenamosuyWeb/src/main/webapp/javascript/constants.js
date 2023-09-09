@@ -1,0 +1,1 @@
+export const localBackendUrl = 'http://localhost:8080/EntrenamosuyWeb'
