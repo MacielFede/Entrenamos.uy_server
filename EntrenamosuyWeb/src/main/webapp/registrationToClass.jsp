@@ -20,7 +20,7 @@
     <h1 class="mb-4">Registrese a una clase!</h1>
     <form>
       <section class="form-floating mb-3">
-        <select class="form-select" id="instituteSelect" onchange="setSelectedInstitute(this.value)">
+        <select class="form-select" id="instituteSelect">
           <option selected disabled>Sin seleccionar</option>
             <% for (Map.Entry<String, DtInstitute> institute : institutes.entrySet()) { %>
               <option value="<%= institute.getKey() %>"><%= institute.getKey() %></option>
@@ -62,7 +62,7 @@
           </tr>
         </tbody>
       </table>
-      <button type="submit" class="btn btn-success" disabled>Confirmar registro</button>
+      <button type="button" id="confirmButon" class="btn btn-success" disabled>Confirmar registro</button>
     </form>
   </main>
   <script type="module" src="javascript/registrationToClass.js"></script>
