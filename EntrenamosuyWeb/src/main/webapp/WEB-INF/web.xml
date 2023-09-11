@@ -10,6 +10,16 @@
     <servlet-name>ClassDictationRanking</servlet-name>
     <url-pattern>/ClassDictationRanking</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>RegisterToClass</display-name>
+    <servlet-name>RegisterToClass</servlet-name>
+    <servlet-class>servlets.RegisterToClass</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RegisterToClass</servlet-name>
+    <url-pattern>/RegisterToClass</url-pattern>
+  </servlet-mapping>
   <display-name>EntrenamosuyWeb</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
@@ -19,4 +29,34 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>LogIn</display-name>
+    <servlet-name>LogIn</servlet-name>
+    <servlet-class>servlets.LogIn</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogIn</servlet-name>
+    <url-pattern>/LogIn</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetSession</display-name>
+    <servlet-name>GetSession</servlet-name>
+    <servlet-class>servlets.GetSession</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetSession</servlet-name>
+    <url-pattern>/GetSession</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>LogOut</display-name>
+    <servlet-name>LogOut</servlet-name>
+    <servlet-class>servlets.LogOut</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogOut</servlet-name>
+    <url-pattern>/LogOut</url-pattern>
+  </servlet-mapping>
 </web-app>

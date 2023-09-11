@@ -4,27 +4,37 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Iniciar sesión</title>
 <%@include file="header.jsp" %>
 </head>
 <body>
-	<h1 align="center">Inicio de sesión</h1>
-	<form action="LogIn" method="post">
-	  <div class="mb-3">
-	    <label for="exampleInputEmail1" class="form-label">Email address</label>
-	    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-	    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-	  </div>
-	  <div class="mb-3">
-	    <label for="exampleInputPassword1" class="form-label">Password</label>
-	    <input type="password" class="form-control" id="exampleInputPassword1">
-	  </div>
-	  <div class="mb-3 form-check">
-	    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-	    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-	  </div>
-	  <button type="submit" class="btn btn-primary">Submit</button>
-	</form>
+	<h1 align="center">Iniciar sesión</h1>
+	<main class="container">
+		<form action="LogIn" method="post">
+		  <div class="mb-3">
+		    <label for="inputUserName" class="form-label">Usuario</label>
+		    <input type="text" class="form-control" id="inputUserName" name="inputUserName" aria-describedby="inputUserName">
+		    <div id="userHelp" class="form-text">Acá no se comparten datos manito.</div>
+		  </div>
+		  <div class="mb-3">
+		    <label for="inputPassword" class="form-label">Contrsaeña</label>
+		    <input type="password" class="form-control" id="inputPassword">
+		  </div>
+		  <% String logInErr = (String) request.getAttribute("logInErr"); %>
+		  <% if (logInErr != null) { %>
+			<div class="alert alert-danger">
+			        <%= logInErr %>
+			</div>
+		  <% } %>
+		  <!--  
+		  <div class="mb-3 form-check">
+		    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+		    <label class="form-check-label" for="exampleCheck1">Mantener sesión iniciada</label>
+		  </div>-->
+		  <button type="submit" class="btn btn-primary">Confirmar</button>
+		 
+		</form>
+	</main>
 </body>
 <%@include file="footer.jsp" %>
 </html>
