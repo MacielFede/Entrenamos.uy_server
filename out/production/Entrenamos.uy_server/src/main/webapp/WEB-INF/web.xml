@@ -10,16 +10,6 @@
     <servlet-name>ClassDictationRanking</servlet-name>
     <url-pattern>/ClassDictationRanking</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>RegisterToClass</display-name>
-    <servlet-name>RegisterToClass</servlet-name>
-    <servlet-class>servlets.RegisterToClass</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RegisterToClass</servlet-name>
-    <url-pattern>/RegisterToClass</url-pattern>
-  </servlet-mapping>
   <display-name>EntrenamosuyWeb</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
