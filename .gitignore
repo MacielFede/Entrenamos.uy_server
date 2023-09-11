@@ -1,2 +1,14 @@
 /.metadata/
 .idea
+/.idea
+RemoteSystemsTempFiles
+/RemoteSystemsTempFiles
+Servers
+/Servers
+bin
+/bin
+out
+/out
+.project
+.classpath
+.settings/
