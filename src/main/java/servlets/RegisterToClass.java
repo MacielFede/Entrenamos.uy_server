@@ -71,6 +71,7 @@ public class RegisterToClass extends HttpServlet {
         		jsonToReturn = gson.toJson(classInformation);
         	}
         	default -> {
+        		this.updateIC();
         		this.sendBadResponse(response, "No se encontraron parametros validos en la petición");
         	}
         	}
@@ -88,6 +89,7 @@ public class RegisterToClass extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	if (request.getSession() == null || request.getSession().getAttribute("userType") != "M") {
     		this.sendBadResponse(response, "El usuario no inicio sesión o es un profesor");
+    		return;
     	}
     	String chosenClass = request.getHeader("chosenClass");
         if (chosenClass == null){

@@ -17,11 +17,13 @@
       Map<String, DtInstitute> institutes = (Map<String,DtInstitute>) request.getAttribute("institutes");
     %>
   <main class="container mt-5">
+  	<div id="feedbackAlert" class="alert hide" role="alert">
+	</div>
     <h1 class="mb-4">Registrese a una clase!</h1>
     <form>
       <section class="form-floating mb-3">
-        <select class="form-select" id="instituteSelect" onchange="setSelectedInstitute(this.value)">
-          <option selected disabled>Sin seleccionar</option>
+        <select class="form-select" id="instituteSelect">
+          <option selected disabled value="Sin seleccionar">Sin seleccionar</option>
             <% for (Map.Entry<String, DtInstitute> institute : institutes.entrySet()) { %>
               <option value="<%= institute.getKey() %>"><%= institute.getKey() %></option>
             <% } %>
@@ -30,14 +32,14 @@
       </section>
       <section class="form-floating mb-3">
         <select class="form-select mb-3" id="activitySelect">
-          <option selected disabled>Sin seleccionar</option>
+          <option selected disabled value="Sin seleccionar">Sin seleccionar</option>
 
         </select>
         <label for="activitySelect">Actividad</label>
       </section>
       <section class="form-floating mb-3">
         <select class="form-select mb-3" id="classSelect">
-          <option selected disabled>Sin seleccionar</option>
+          <option selected disabled value="Sin seleccionar">Sin seleccionar</option>
 
         </select>
         <label for="classSelect">Clase</label>
@@ -62,9 +64,10 @@
           </tr>
         </tbody>
       </table>
-      <button type="submit" class="btn btn-success" disabled>Confirmar registro</button>
+      <button type="button" id="confirmButon" class="btn btn-success" disabled>Confirmar registro</button>
     </form>
   </main>
-  <script src="javascript/registrationToClass.js"></script>
+  <script type="module" src="javascript/registrationToClass.js"></script>
+  <%@include file="footer.jsp"%>
 </body>
 </html>

@@ -21,6 +21,9 @@
         </li><li class="nav-item">
           <a class="nav-link" id="header-register-to-class" role="button" href="#" onclick="postToServlet('RegisterToClass');">Registrarse a dictado de clase</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="postToServlet('ModifyUserData');">Modificar información de perfil</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Rankings

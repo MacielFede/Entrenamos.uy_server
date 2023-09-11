@@ -42,7 +42,7 @@
 	  		<input type="date" name="userBornDate" value=La fecha del tipo max=La fecha de hoy aria-label="bornDate"/>
 		</div>
 		
-		<button type="submit">Guardar cambios</button>	
+		<button class="btn btn-success" type="submit">Guardar cambios</button>	
 	</form>
 	</main>
 </body>

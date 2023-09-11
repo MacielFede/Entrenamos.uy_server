@@ -27,23 +27,24 @@ public class ModifyUserData extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		
-		if(request.getSession() == null) { 
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-	    	response.setHeader("error", "El usuario no inicio sesion");
-	        response.getWriter().close();
-		}
-		if( la query trae algo, hago el post de la nueva info) {
+		//if(request.getSession(false) == null) { 
+			//response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+	    	//response.setHeader("error", "El usuario no inicio sesion");
+	        //response.getWriter().close();
+	        //return;
+		//}
+		//if( la query trae algo, hago el post de la nueva info) {
 			
-		} else {
+		//} else {
 			ControllerFactory controllerFactory = ControllerFactory.getInstance();
 			UserInterface uc = controllerFactory.getUserInterface();
-			
-			DtUser user = uc.chooseUser((String) request.getSession().getAttribute("userName"));
+			//(String) request.getSession().getAttribute("userName")
+			DtUser user = uc.chooseUser("Tarzan");
 			request.setAttribute("userInfo", user);
 			RequestDispatcher rd;
 			rd = request.getRequestDispatcher("/modifyUserData.jsp");
 			rd.forward(request,response);			
-		}
+		//}
 	}
 
 }
