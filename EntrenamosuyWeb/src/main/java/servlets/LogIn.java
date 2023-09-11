@@ -73,7 +73,7 @@ public class LogIn extends HttpServlet {
 			String userType = "P";
 			
 			if (user instanceof DtMember) {
-				userType = "S";
+				userType = "M";
 			}
 			
 		    HttpSession session = request.getSession(); 
