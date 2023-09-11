@@ -7,7 +7,7 @@
 </form>
 <head>
 <meta charset="ISO-8859-1">
-<title>Entrenamos.uy</title>
+<%@include file="header.jsp" %>
 </head>
 <body>
 </body>

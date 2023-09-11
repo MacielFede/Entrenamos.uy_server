@@ -10,7 +10,7 @@
     <servlet-name>ClassDictationRanking</servlet-name>
     <url-pattern>/ClassDictationRanking</url-pattern>
   </servlet-mapping>
-    <servlet>
+   <servlet>
     <description></description>
     <display-name>RegisterToClass</display-name>
     <servlet-name>RegisterToClass</servlet-name>
