@@ -87,7 +87,8 @@
   <form id="servletForm"  method="post" style="display: none;">
 	<input type="hidden" name="servletName" id="servletName" value="">
   </form>
-      
+</nav>
+
       <script>
       	function setHeaderDisplay(){
       		const url = window.location.href
@@ -110,9 +111,8 @@
 			// Setea el nombre del servlet en el campo oculto
 			document.getElementById("servletName").value = servletName;
 			// Envï¿½a el formulario
-		    const form = document.getElementsByTagName('form');
-		    form[0].action = servletName; // Configura el atributo action del formulario
-		    form[0].submit();
+		    const form = document.getElementById('servletForm');
+		    form.action = servletName; // Configura el atributo action del formulario
+		    form.submit();
 		  }
 	  </script>
-</nav>
