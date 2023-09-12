@@ -1,12 +1,6 @@
 <%@ page import="java.util.Map" %>
 <%@ page import="dataTypes.DtInstitute" %>
-<%@ page import="dataTypes.DtActivity" %><%--
-  Created by IntelliJ IDEA.
-  User: Fede Maciel
-  Date: 7/9/2023
-  Time: 20:16
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="dataTypes.DtActivity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

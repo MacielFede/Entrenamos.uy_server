@@ -1,15 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<form id="formInit" method="get" style="display: none;">
-    <input type="hidden" name="servletName1" id="servletName1" value="">
-</form>
 <head>
-<meta charset="ISO-8859-1">
 <%@include file="header.jsp" %>
 </head>
 <body>
+<form id="formInit" method="get" style="display: none;">
+    <input type="hidden" name="servletName1" id="servletName1" value="">
+</form>
 </body>
   	<script>
 		  window.onload = function() {

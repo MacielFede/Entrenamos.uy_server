@@ -1,4 +1,5 @@
 <%--suppress LossyEncoding --%>
+<meta charset="UTF-8">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/titlebar_icon_weightlifter.png" sizes="16x16">
 <title>Entrenamos.uy</title>
@@ -9,8 +10,8 @@
 	String userType = (String) session.getAttribute("userType");
 %>
 <!--
-<p>El usuario es <%= userName %>.</p>
-<p>De tipo <%= userType %>.</p>
+<p>El usuario es userName.</p>
+<p>De tipo userType.</p>
 -->
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -25,7 +26,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       	<%if (userName == null) { %>
 	        <li class="nav-item">
-	          <a class="nav-link" href="logIn.jsp">Iniciar sesion</a>
+	          <a id="header-login" class="nav-link" href="logIn.jsp">Iniciar sesion</a>
 	        </li>
         <%} else { %>
         <li class="nav-item">
