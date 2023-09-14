@@ -33,7 +33,7 @@
           <a class="nav-link" id="header-home" aria-current="page" href="init.jsp">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="btn nav-link" id="header-modify-user-data" aria-current="page" onclick="postToServlet('ModifyUserData');">Modificar informacion</a>
+          <a class="nav-link" style="cursor: pointer;" id="header-modify-user-data" aria-current="page" onclick="postToServlet('ModifyUserData');">Modificar informacion</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

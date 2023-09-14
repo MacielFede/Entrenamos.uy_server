@@ -71,7 +71,6 @@ public class RegisterToClass extends HttpServlet {
         		jsonToReturn = gson.toJson(classInformation);
         	}
         	default -> {
-        		this.updateIC();
         		this.sendBadResponse(response, "No se encontraron parametros validos en la petición");
         	}
         	}
