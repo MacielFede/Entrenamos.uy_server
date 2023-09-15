@@ -133,7 +133,8 @@ document.getElementById('classSelect').addEventListener('change', (event) => {
 
 // Confirmation button event
 document.getElementById('confirmButon').addEventListener('click', (event) => {
-	event.stopPropagation();
+	event.stopPropagation()
+	event.preventDefault()
 	event.target.disabled = true
 	document.getElementById('confirmButon').innerHTML = `<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
   								<span role="status">Cargando...</span>`

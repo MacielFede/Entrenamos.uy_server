@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 import dataTypes.DtClass;
@@ -21,30 +22,43 @@ public class ModifyUserData extends HttpServlet {
        
     public ModifyUserData() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		
-		//if(request.getSession(false) == null) { 
-			//response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-	    	//response.setHeader("error", "El usuario no inicio sesion");
-	        //response.getWriter().close();
-	        //return;
-		//}
-		//if( la query trae algo, hago el post de la nueva info) {
-			
-		//} else {
-			ControllerFactory controllerFactory = ControllerFactory.getInstance();
-			UserInterface uc = controllerFactory.getUserInterface();
-			//(String) request.getSession().getAttribute("userName")
-			DtUser user = uc.chooseUser("Tarzan");
+		if(request.getSession(false) == null) { 
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+	    	response.setHeader("error", "El usuario no inicio sesion");
+	        response.getWriter().close();
+	        return;
+		}
+		ControllerFactory controllerFactory = ControllerFactory.getInstance();
+		UserInterface uc = controllerFactory.getUserInterface();
+		DtUser user = uc.chooseUser((String) request.getSession().getAttribute("userName"));
+		if( request.getParameter("modifyUserExecute") != null) {
+        	try {
+        		String name = request.getHeader("name");
+        		String lastName = request.getHeader("lastName");
+        		String[] dateArray = request.getHeader("bornDate").split("-", 3);
+
+        		Date date = new Date(Integer.parseInt(dateArray[0]) , Integer.parseInt(dateArray[1]), Integer.parseInt(dateArray[2]));
+        		DtUser newUserInfo = new DtUser(user.getNickname(), name, lastName, user.getEmail(), date);
+        		System.out.println(date.getYear());
+        		uc.updateUserInfo(newUserInfo);   
+        		response.setStatus(200);
+        		response.getWriter().close();
+        	} catch (Exception e) {
+        		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+    	    	response.setHeader("error", e.getMessage());
+    	        response.getWriter().close();
+        	}
+		} else {
 			request.setAttribute("userInfo", user);
 			RequestDispatcher rd;
 			rd = request.getRequestDispatcher("/modifyUserData.jsp");
 			rd.forward(request,response);			
-		//}
+		}
 	}
 
 }
