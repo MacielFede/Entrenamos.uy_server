@@ -40,11 +40,19 @@ public class ModifyUserData extends HttpServlet {
         	try {
         		String name = request.getHeader("name");
         		String lastName = request.getHeader("lastName");
+        		String newPass = request.getHeader("newPassword");
+        		String oldPass = request.getHeader("oldPassword");
         		String[] dateArray = request.getHeader("bornDate").split("-", 3);
+        		
+        		boolean passwordCheck = oldPass.equals(uc.chooseUser(user.getNickname()).getPassword());
+        		
+        		if(newPass == null || newPass.isEmpty() || !passwordCheck) {
+        			throw new Exception("Alguno de los campos de contraseña es invalido, reviselos por favor");
+        		}
 
         		Date date = new Date(Integer.parseInt(dateArray[0]) , Integer.parseInt(dateArray[1]), Integer.parseInt(dateArray[2]));
-        		DtUser newUserInfo = new DtUser(user.getNickname(), name, lastName, user.getEmail(), date);
-        		System.out.println(date.getYear());
+        		DtUser newUserInfo = new DtUser(user.getNickname(), name, lastName, user.getEmail(), date, newPass);
+
         		uc.updateUserInfo(newUserInfo);   
         		response.setStatus(200);
         		response.getWriter().close();
