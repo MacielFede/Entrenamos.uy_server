@@ -6,17 +6,17 @@
 <%@include file="header.jsp" %>
 </head>
 <body>
-	<h1 align="center">Iniciar sesiÃ³n</h1>
+	<h1 align="center">Iniciar sesión</h1>
 	<main class="container">
 		<form action="LogIn" method="post">
 		  <div class="mb-3">
 		    <label for="inputUserName" class="form-label">Usuario</label>
 		    <input type="text" class="form-control" id="inputUserName" name="inputUserName" aria-describedby="inputUserName">
-		    <div id="userHelp" class="form-text">AcÃ¡ no se comparten datos manito.</div>
+		    <div id="userHelp" class="form-text">Acá no se comparten datos manito.</div>
 		  </div>
 		  <div class="mb-3">
-		    <label for="inputPassword" class="form-label">ContrsaeÃ±a</label>
-		    <input type="password" class="form-control" id="inputPassword">
+		    <label for="inputPassword" class="form-label">Contrseña</label>
+		    <input type="password" class="form-control" id="inputPassword" name="inputPassword">
 		  </div>
 		  <% String logInErr = (String) request.getAttribute("logInErr"); %>
 		  <% if (logInErr != null) { %>
