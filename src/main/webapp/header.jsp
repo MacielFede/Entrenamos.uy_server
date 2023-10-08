@@ -45,6 +45,9 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li> -->
           </ul>
+          <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer;" id="header-add-new-user" aria-current="page" onclick="postToServlet('AddNewUser');">Agregar usuario</a>
+          </li>
         </li>
 	        <%if (userType.equals("P")) { %>
 	        	<li class="nav-item dropdown">
@@ -104,6 +107,9 @@
      		} else if (url.endsWith('ModifyUserData')){
      			document.getElementById("header-modify-user-data").classList.add("active")
      		}
+            else if (url.endsWith('AddNewUser')){
+                document.getElementById("header-add-new-user").classList.add("active")
+            }
       	}
       	
       	setHeaderDisplay()
