@@ -59,17 +59,19 @@ public class LogIn extends HttpServlet {
 		ControllerFactory controllerFactory = ControllerFactory.getInstance();
 		UserInterface ic = controllerFactory.getUserInterface();
 		String userName = (String) request.getParameter("inputUserName");
+		String password = (String) request.getParameter("inputPassword");
 		DtUser user = null;
+		boolean logErr = (userName == null);
 		
-		if(userName != null) {
+		if(!logErr) {
 			user = ic.chooseUser(userName);
+			logErr = !(user.getPassword().equals(password));
 		} else {
 			request.setAttribute("logInErr", "Ingrese datos válidos");
 			redirect = "/logIn.jsp";
 		}
 		
-		boolean authUser = (user != null);
-		if (authUser) {
+		if (!logErr) {
 			String userType = "P";
 			
 			if (user instanceof DtMember) {
