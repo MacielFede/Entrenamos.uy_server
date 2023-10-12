@@ -44,10 +44,14 @@ public class ModifyUserData extends HttpServlet {
         		String oldPass = request.getHeader("oldPassword");
         		String[] dateArray = request.getHeader("bornDate").split("-", 3);
         		
-        		boolean passwordCheck = oldPass.equals(uc.chooseUser(user.getNickname()).getPassword());
-        		
-        		if(newPass == null || newPass.isEmpty() || !passwordCheck) {
-        			throw new Exception("Alguno de los campos de contraseña es invalido, reviselos por favor");
+        		if (oldPass.isEmpty() || oldPass == null) {
+        			newPass = uc.chooseUser(user.getNickname()).getPassword();
+        		} else {
+        			boolean passwordCheck = oldPass.equals(uc.chooseUser(user.getNickname()).getPassword());
+        			
+        			if(newPass == null || newPass.isEmpty() || !passwordCheck) {
+        				throw new Exception("Alguno de los campos de contraseña es invalido, reviselos por favor");
+        			}        			
         		}
 
         		Date date = new Date(Integer.parseInt(dateArray[0]) , Integer.parseInt(dateArray[1]), Integer.parseInt(dateArray[2]));
