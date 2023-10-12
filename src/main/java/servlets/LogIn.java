@@ -65,7 +65,7 @@ public class LogIn extends HttpServlet {
 		
 		if(!logErr) {
 			user = ic.chooseUser(userName);
-			logErr = !(user.getPassword().equals(password));
+			logErr = !(user != null && user.getPassword().equals(password));
 		} else {
 			request.setAttribute("logInErr", "Ingrese datos válidos");
 			redirect = "/logIn.jsp";
