@@ -59,4 +59,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>ConsultUserData</display-name>
+    <servlet-name>ConsultUserData</servlet-name>
+    <servlet-class>servlets.ConsultUserData</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConsultUserData</servlet-name>
+    <url-pattern>/ConsultUserData</url-pattern>
+  </servlet-mapping>
 </web-app>
