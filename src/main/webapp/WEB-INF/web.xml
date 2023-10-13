@@ -20,6 +20,16 @@
     <servlet-name>ClassDictationRanking</servlet-name>
     <url-pattern>/ClassDictationRanking</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>SportActivitiesRanking</display-name>
+    <servlet-name>SportActivitiesRanking</servlet-name>
+    <servlet-class>servlets.SportActivitiesRanking</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SportActivitiesRanking</servlet-name>
+    <url-pattern>/SportActivitiesRanking</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>RegisterToClass</display-name>
