@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" version="6.0">
+<!--  <servlet>-->
+<!--    <description></description>-->
+<!--    <display-name>SportActivityConsultation</display-name>-->
+<!--    <servlet-name>SportActivityConsultation</servlet-name>-->
+<!--    <servlet-class>servlets.SportActivityConsultation</servlet-class>-->
+<!--  </servlet>-->
+<!--  <servlet-mapping>-->
+<!--    <servlet-name>SportActivityConsultation</servlet-name>-->
+<!--    <url-pattern>/SportActivityConsultation</url-pattern>-->
+<!--  </servlet-mapping>-->
+  <servlet>
+    <description></description>
+    <display-name>AddNewUser</display-name>
+    <servlet-name>AddNewUser</servlet-name>
+    <servlet-class>servlets.AddNewUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddNewUser</servlet-name>
+    <url-pattern>/AddNewUser</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>ModifyUserData</display-name>
@@ -19,6 +39,16 @@
   <servlet-mapping>
     <servlet-name>ClassDictationRanking</servlet-name>
     <url-pattern>/ClassDictationRanking</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>SportActivitiesRanking</display-name>
+    <servlet-name>SportActivitiesRanking</servlet-name>
+    <servlet-class>servlets.SportActivitiesRanking</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SportActivitiesRanking</servlet-name>
+    <url-pattern>/SportActivitiesRanking</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
