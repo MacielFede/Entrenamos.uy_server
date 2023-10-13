@@ -15,7 +15,7 @@
 		    <div id="userHelp" class="form-text">Acá no se comparten datos manito.</div>
 		  </div>
 		  <div class="mb-3">
-		    <label for="inputPassword" class="form-label">Contrseña</label>
+		    <label for="inputPassword" class="form-label">Contraseña</label>
 		    <input type="password" class="form-control" id="inputPassword" name="inputPassword">
 		  </div>
 		  <% String logInErr = (String) request.getAttribute("logInErr"); %>

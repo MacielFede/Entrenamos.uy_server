@@ -9,8 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+
+import com.google.gson.Gson;
 
 import dataTypes.DtActivity;
 import dataTypes.DtClass;
@@ -31,6 +34,7 @@ public class ConsultUserData extends HttpServlet {
 	// Controllers
 	private InstituteInterface ic = ControllerFactory.getInstance().getInstituteInterface();
 	private UserInterface uc = ControllerFactory.getInstance().getUserInterface();
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -40,14 +44,82 @@ public class ConsultUserData extends HttpServlet {
 		this.activities = ic.getAllActivities();
 	}
 
+	private void sendBadResponse(HttpServletResponse res, String message) throws IOException {
+		res.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		res.setHeader("error", message);
+		res.getWriter().close();
+	}
+	
+	private DtActivity getActivityFromClass(String className) {
+		// Iterate through activities to find the class related activity
+		for (Map.Entry<String, DtActivity> entry : activities.entrySet()) {
+			DtActivity activity = entry.getValue();
+			// Get activity classes
+			Map<String, DtClass> currentActivityClasses = activity.getClasses();
+			for (Map.Entry<String, DtClass> classEntry : currentActivityClasses.entrySet()) {
+				DtClass aClass = classEntry.getValue();
+				if (aClass.getName().equals(className))
+					return activity;
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// Get already created session
+		HttpSession session = request.getSession(false);
+		// Get user info
+		DtUser user = uc.chooseUser((String) session.getAttribute("userName"));
+		String userType = (String) session.getAttribute("userType");
+		// Get parameters
+		String aClass = request.getParameter("chosenClass");
+		String action = request.getHeader("action");
+
+		// Create the Gson handler and the string to return
+		Gson gson = new Gson();
+		String jsonToReturn = "";
+
+		// Get info
+		try {
+			switch(action) {
+				case "CLASS" -> {
+					// Fill the return object with the class information
+	        		Map<String, String> information = new HashMap<>();
+	        		// Get class info
+	        		DtClass theClass = ic.chooseClassByName(aClass);
+	        		// Get activity from class
+	        		DtActivity relatedActivity = this.getActivityFromClass(aClass);
+	        		// User type
+	        		information.put("userType", userType);
+	        		// Class info
+	        		information.put("className", theClass.getName());
+	        		information.put("classUrl", theClass.getUrl());
+	        		information.put("classPrice", relatedActivity.getPrice().toString());
+	        		information.put("classDate", theClass.getDateAndTime().toString());
+	        		// Activity info
+	        		information.put("activityName", relatedActivity.getName());
+	        		information.put("activityDescription", relatedActivity.getDescription());
+	        		information.put("activityDuration", relatedActivity.getDuration().toString());
+	        		information.put("activityDate", relatedActivity.getRegistryDate().toString());
+	        		information.put("activityPrice", relatedActivity.getPrice().toString());
+	        		jsonToReturn = gson.toJson(information);
+				}
+				default -> {
+        			this.sendBadResponse(response, "No se encontraron parametros validos en la petición");
+				}
+			}
+		} catch (Exception e) {
+			this.sendBadResponse(response, "La informacion estaba desactualizada, intentalo de nuevo");
+		}
+		// Send response
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(jsonToReturn);
+        response.getWriter().close();
 	}
 
 	/**
@@ -55,8 +127,8 @@ public class ConsultUserData extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Get already created session 
-		HttpSession session = request.getSession(false);  
+		// Get already created session
+		HttpSession session = request.getSession(false);
 		// Check that user is logged in
 		if (session == null) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -68,38 +140,21 @@ public class ConsultUserData extends HttpServlet {
 		// Get user info
 		DtUser user = uc.chooseUser((String) session.getAttribute("userName"));
 		String userType = (String) session.getAttribute("userType");
-
-		// Requested something
-		if (request.getParameter("consultUserExecute") != null) {
-			
-			// Use-case flow:
-			// 1- If member, just get all the class related info and return it as a JSON, then show it into a table (if user clicks on a button
-			// that will be like "Show class info". The basic user info will be shown as usual
-			// 2- If professor, get the class related info AND the related activity details. Return it as a JSON. 
-			// Basic user info will be shown + class info will be shown + the related activity name will be shown. Next to the related activity,
-			// There will be a button like "Show activity info" and when clicked, user will be able to be activity details.
-			
-			
-
-		} else { // Just requested the jsp
-			// If user is member, return related classes
-			if (userType == "M") {
-				Map<String, DtClass> memberClasses = uc.getMemberEnrolledClasses(user.getNickname());
-				request.setAttribute("memberClasses", memberClasses);
-			}
-			
-			// If user is professor, return his classes
-			else if (userType == "P") {
-				Map<String, DtClass> professorClasses = ((DtProfessor) user).getRelatedClasses();
-				request.setAttribute("professorClasses", professorClasses);
-			}
-			
-			request.setAttribute("userInfo", user);
-			RequestDispatcher rd;
-			rd = request.getRequestDispatcher("/consultUserData.jsp");
-			rd.forward(request, response);
+		
+		// If user is member, return related classes
+		if (userType == "M") {
+			Map<String, DtClass> memberClasses = uc.getMemberEnrolledClasses(user.getNickname());
+			request.setAttribute("memberClasses", memberClasses);
 		}
-
+		// If user is professor, return his classes
+		else if (userType == "P") {
+			Map<String, DtClass> professorClasses = ((DtProfessor) user).getRelatedClasses();
+			request.setAttribute("professorClasses", professorClasses);
+		}
+		request.setAttribute("userInfo", user);
+		RequestDispatcher rd;
+		rd = request.getRequestDispatcher("/consultUserData.jsp");
+		rd.forward(request, response);
 	}
 
 }
