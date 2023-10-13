@@ -45,7 +45,13 @@
             <!--<li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li> -->
           </ul>
+          <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer;" id="header-add-new-user" aria-current="page" onclick="postToServlet('AddNewUser');">Agregar usuario</a>
+          </li>
         </li>
+          <li class="nav-item">
+              <a class="nav-link" style="cursor: pointer;" id="header-sport-activity-consultation" aria-current="page" onclick="postToServlet('SportActivityConsultation');">Consulta dictado de clase</a>
+          </li>
 	        <%if (userType.equals("P")) { %>
 	        	<li class="nav-item dropdown">
 		          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -103,7 +109,12 @@
 	    		document.getElementById("header-ranking").classList.add("active")
      		} else if (url.endsWith('ModifyUserData')){
      			document.getElementById("header-modify-user-data").classList.add("active")
-     		}
+     		}else if (url.endsWith('AddNewUser')){
+                document.getElementById("header-add-new-user").classList.add("active")
+            }else if (url.endsWith('SportActivityConsultation')){
+                document.getElementById("header-sport-activity-consultation").classList.add("active")
+            }
+
       	}
       	
       	setHeaderDisplay()
