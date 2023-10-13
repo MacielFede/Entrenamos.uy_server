@@ -73,6 +73,10 @@ public class AddNewUser extends HttpServlet {
 				}
 
 			}catch (Exception e) {
+				// ==================================================
+				// Si se hace debugg, la excepcion se muestra aqui.
+				// ==================================================
+
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				response.setHeader("error", e.getMessage());
 				response.getWriter().close();
