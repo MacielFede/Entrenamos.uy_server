@@ -35,6 +35,9 @@
         <li class="nav-item">
           <a class="nav-link" style="cursor: pointer;" id="header-modify-user-data" aria-current="page" onclick="postToServlet('ModifyUserData');">Modificar informacion</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" style="cursor: pointer;" id="header-consult-user-data" aria-current="page" onclick="postToServlet('ConsultUserData');">Consultar informacion</a>
+        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Rankings
@@ -99,23 +102,25 @@
       <script>
       	function setHeaderDisplay(){
       		const url = window.location.href
-      		if(url.includes("init")){
+      		if(url.includes("init")) {
     			document.getElementById("header-home").classList.add("active")
-    		} else if(url.includes('logIn')){
+    		} else if(url.includes('logIn')) {
     			document.getElementById("header-login").classList.add("active")
-    		} else if(url.endsWith('RegisterToClass')){
+    		} else if(url.endsWith('RegisterToClass')) {
 	    		document.getElementById("header-members").classList.add("active")
-	        } else if(url.endsWith('Ranking')){
+	      } else if(url.endsWith('Ranking')) {
 	    		document.getElementById("header-ranking").classList.add("active")
-     		} else if (url.endsWith('ModifyUserData')){
+     		} else if (url.endsWith('ModifyUserData')) {
      			document.getElementById("header-modify-user-data").classList.add("active")
-     		}else if (url.endsWith('AddNewUser')){
-                document.getElementById("header-add-new-user").classList.add("active")
-            }else if (url.endsWith('SportActivityConsultation')){
-                document.getElementById("header-sport-activity-consultation").classList.add("active")
-            }
-
-      	}
+     		} else if (url.endsWith('ConsultUserData')) {
+     			document.getElementById("header-consult-user-data").classList.add("active")
+     		} else if (url.endsWith('AddNewUser')) {
+          document.getElementById("header-add-new-user").classList.add("active")
+        } else if (url.endsWith('SportActivityConsultation')) {
+          document.getElementById("header-sport-activity-consultation").classList.add("active")
+        }
+          
+      }
       	
       	setHeaderDisplay()
       	
