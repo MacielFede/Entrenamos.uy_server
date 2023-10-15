@@ -13,6 +13,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Consultar informacion de usuario</title>
 	<%@include file="header.jsp"%>
 	
 	<style>
@@ -262,44 +263,46 @@
 	}
 	
 	// Class selected event
-	document.getElementById('classSelect').addEventListener('change', (event) => {
-		cleanTables();
-		// Fetch class and activity info -> DISCLAIMER: cambiar el path al servlet segun la compu jiji (el nombre de mi carpeta es Tarea_2, soy Axel)
-		fetch('http://localhost:8080/Tarea_2/ConsultUserData?chosenClass=' + event.target.value,
-        	{	method: 'GET',
-            	headers: {
-                'Content-Type': 'application/json',
-                action: 'CLASS'
-            }}
-    	).then((response) => {
-        	if(!response.ok) {
-				restartUseCase()
-            	throw new Error(response.headers.get('error'))
-        	}
-        	return response.json()
-    	}).then((data) => {
-        	// Show class info
-    		showRelatedClass(data)
-			// Let user reload use case
-			document.getElementById("reloadButton").disabled = false;
-			// If professor, let him see the activity
-			if (data.userType === "P") {
-				// Let user see button to show activity
-				document.getElementById('showActivityButton').style.display = 'block';
-				document.getElementById('showActivityButton').disabled = false;
-				// Global variable
-				currentActivity = {
-					name: data.activityName,
-					date: data.activityDate,
-					description: data.activityDescription,
-					duration: data.activityDuration,
-					price: data.activityPrice,
-				}
-			}	
-    	}).catch((error) => {
-        	displayAlert(error, 'alert-danger')
-    	})
-	})
+	if (document.getElementById('classSelect')) {
+		document.getElementById('classSelect').addEventListener('change', (event) => {
+			cleanTables();
+			// Fetch class and activity info -> DISCLAIMER: cambiar el path al servlet segun la compu jiji (el nombre de mi carpeta es Tarea_2, soy Axel)
+			fetch('http://localhost:8080/Tarea_2/ConsultUserData?chosenClass=' + event.target.value,
+	        	{	method: 'GET',
+	            	headers: {
+	                'Content-Type': 'application/json',
+	                action: 'CLASS'
+	            }}
+	    	).then((response) => {
+	        	if(!response.ok) {
+					restartUseCase()
+	            	throw new Error(response.headers.get('error'))
+	        	}
+	        	return response.json()
+	    	}).then((data) => {
+	        	// Show class info
+	    		showRelatedClass(data)
+				// Let user reload use case
+				document.getElementById("reloadButton").disabled = false;
+				// If professor, let him see the activity
+				if (data.userType === "P") {
+					// Let user see button to show activity
+					document.getElementById('showActivityButton').style.display = 'block';
+					document.getElementById('showActivityButton').disabled = false;
+					// Global variable
+					currentActivity = {
+						name: data.activityName,
+						date: data.activityDate,
+						description: data.activityDescription,
+						duration: data.activityDuration,
+						price: data.activityPrice,
+					}
+				}	
+	    	}).catch((error) => {
+	        	displayAlert(error, 'alert-danger')
+	    	})
+		})
+	}
 	
 	
 	
