@@ -35,17 +35,6 @@
         <li class="nav-item">
           <a class="nav-link" style="cursor: pointer;" id="header-modify-user-data" aria-current="page" onclick="postToServlet('ModifyUserData');">Modificar informacion</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Rankings
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationRanking');">Ranking de dictados de clases</a></li>
-            <li><a class="dropdown-item" href="#" onclick="postToServlet('SportActivitiesRanking');">Ranking de actividades deportivas</a></li> 
-            <!--<li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-          </ul>
-        </li>
 	        <%if (userType.equals("P")) { %>
 	        	<li class="nav-item dropdown">
 		          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,6 +42,17 @@
 		          </a>
 		          <ul class="dropdown-menu">
 		            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationRanking');">Ranking de dictados de clases</a></li>
+		            <!--<li><a class="dropdown-item" href="#" onclick="postToServlet('SportActivitiesRanking');">Ranking de actividades deportivas</a></li> 
+		            <li><hr class="dropdown-divider"></li>
+		            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+		          </ul>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            Consultas
+		          </a>
+		          <ul class="dropdown-menu">
+		            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationConsultation');">Consulta de dictados de clases</a></li>
 		            <!--<li><a class="dropdown-item" href="#" onclick="postToServlet('SportActivitiesRanking');">Ranking de actividades deportivas</a></li> 
 		            <li><hr class="dropdown-divider"></li>
 		            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
