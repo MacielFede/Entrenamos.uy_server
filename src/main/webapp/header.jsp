@@ -56,6 +56,10 @@
               <a class="nav-link" style="cursor: pointer;" id="header-sport-activity-consultation" aria-current="page" onclick="postToServlet('SportActivityConsultation');">Consulta dictado de clase</a>
           </li>
 	        <%if (userType.equals("P")) { %>
+	        	<li class="nav-item">
+              		<a class="nav-link" style="cursor: pointer;" id="header-add-class" aria-current="page" onclick="postToServlet('AddClass');">Alta de dictado de clase</a>
+          		</li>
+	        
 	        	<li class="nav-item dropdown">
 		          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 		            Rankings
@@ -108,18 +112,20 @@
     			document.getElementById("header-login").classList.add("active")
     		} else if(url.endsWith('RegisterToClass')) {
 	    		document.getElementById("header-members").classList.add("active")
-	      } else if(url.endsWith('Ranking')) {
+	      	} else if(url.endsWith('Ranking')) {
 	    		document.getElementById("header-ranking").classList.add("active")
      		} else if (url.endsWith('ModifyUserData')) {
      			document.getElementById("header-modify-user-data").classList.add("active")
      		} else if (url.endsWith('ConsultUserData')) {
      			document.getElementById("header-consult-user-data").classList.add("active")
      		} else if (url.endsWith('AddNewUser')) {
-          document.getElementById("header-add-new-user").classList.add("active")
-        } else if (url.endsWith('SportActivityConsultation')) {
-          document.getElementById("header-sport-activity-consultation").classList.add("active")
-        }
-          
+          		document.getElementById("header-add-new-user").classList.add("active")
+        	} else if (url.endsWith('SportActivityConsultation')) {
+          		document.getElementById("header-sport-activity-consultation").classList.add("active")
+        	} else if (url.endsWith('AddClass')) {
+				document.getElementById('header-add-class').classList.add("active")
+            }
+       
       }
       	
       	setHeaderDisplay()
