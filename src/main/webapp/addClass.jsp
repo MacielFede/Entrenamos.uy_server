@@ -146,7 +146,7 @@ function restartUseCase(){
 // Fulfill activities select with the institute activities
 document.getElementById('instituteSelect').addEventListener('change', (event) => {
 	document.getElementById("activitySelect").value = 'Sin seleccionar'
-	fetch('http://localhost:8080/Tarea_2/AddClass?chosenInstitute=' + event.target.value,
+	fetch('http://localhost:8080/Entrenamos.uy_server/AddClass?chosenInstitute=' + event.target.value,
         {method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -198,7 +198,7 @@ document.getElementById('submitButton').addEventListener('click', (event)=> {
   	}
 
   	// Remember, change path as needed
-  	fetch('http://localhost:8080/Tarea_2/AddClass', {
+  	fetch('http://localhost:8080/Entrenamos.uy_server/AddClass', {
   		method: 'POST',
   		headers: {
  			institute: institute,

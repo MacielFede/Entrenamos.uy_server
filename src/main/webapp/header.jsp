@@ -1,7 +1,13 @@
 <%--suppress LossyEncoding --%>
 <meta charset="UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-<link rel="icon" type="image/png" href="${pageContext.request.contextPath}/assets/titlebar_icon_weightlifter.png" sizes="16x16">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+	crossorigin="anonymous">
+<link rel="icon" type="image/png"
+	href="${pageContext.request.contextPath}/assets/titlebar_icon_weightlifter.png"
+	sizes="16x16">
 <title>Entrenamos.uy</title>
 
 
@@ -15,91 +21,100 @@
 -->
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid ms-3">
-    <a class="navbar-brand" href="#">
-      <img id="app-main-icon" src="${pageContext.request.contextPath}/assets/titlebar_icon_weightlifter.png" alt="Icono" style="max-height: 30px" />
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-      	<%if (userName == null) { %>
-	        <li class="nav-item">
-	          <a id="header-login" class="nav-link" href="logIn.jsp">Iniciar sesion</a>
-	        </li>
-        <%} else { %>
-        <li class="nav-item">
-          <a class="nav-link" id="header-home" aria-current="page" href="init.jsp">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="cursor: pointer;" id="header-modify-user-data" aria-current="page" onclick="postToServlet('ModifyUserData');">Modificar informacion</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="cursor: pointer;" id="header-consult-user-data" aria-current="page" onclick="postToServlet('ConsultUserData');">Consultar informacion</a>
-        </li>
-        
-        </li>
-          <li class="nav-item">
-              <a class="nav-link" style="cursor: pointer;" id="header-sport-activity-consultation" aria-current="page" onclick="postToServlet('SportActivityConsultation');">Consulta dictado de clase</a>
-          </li>
-	        <%if (userType.equals("P")) { %>
-	        	<li class="nav-item">
-              		<a class="nav-link" style="cursor: pointer;" id="header-add-class" aria-current="page" onclick="postToServlet('AddClass');">Alta de dictado de clase</a>
-          		</li>
-	        
-	        	<li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            Rankings
-		          </a>
-		          <ul class="dropdown-menu">
-		            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationRanking');">Ranking de dictados de clases</a></li>
-		            <li><a class="dropdown-item" href="#" onclick="postToServlet('SportActivitiesRanking');">Ranking de actividades deportivas</a></li> 
-		            <li><hr class="dropdown-divider"></li>
-		            <li><a class="dropdown-item" href="#">Something else here</a></li>
-		          </ul>
-		        </li>
-		        <li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            Consultas
-		          </a>
-		          <ul class="dropdown-menu">
-		            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationConsultation');">Consulta de dictados de clases</a></li>
-		          </ul>
-		        </li>
-	        <%} %>
-	         <%if (userType.equals("M")) { %>
-				<li class="nav-item dropdown">
-		          <a class="nav-link dropdown-toggle" href="#" id="header-members" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-		            Dropdown socios
-		          </a>
-		          <ul class="dropdown-menu">
-			          <li><a class="dropdown-item" id="header-register-to-class" role="button" href="#" onclick="postToServlet('RegisterToClass');">Registrarse a dictado de clase</a></li>
-		          </ul>
-		        </li>
-	        <%} %>
-	        
-	        <li class="nav-item">
-	          <a class="nav-link" href="#" onclick="postToServlet('LogOut');">Cerrar sesion</a>
-	        </li>
-        <%} %>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Ponele voluntad</a>
-        </li>
-      </ul>
-      <!--
+	<div class="container-fluid ms-3">
+		<a class="navbar-brand" href="#"> <img id="app-main-icon"
+			src="${pageContext.request.contextPath}/assets/titlebar_icon_weightlifter.png"
+			alt="Icono" style="max-height: 30px" />
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<%if (userName == null) { %>
+				<li class="nav-item"><a id="header-login" class="nav-link"
+					href="logIn.jsp">Iniciar sesion</a></li>
+				<%} else { %>
+				<li class="nav-item"><a class="nav-link" id="header-home"
+					aria-current="page" href="init.jsp">Inicio</a></li>
+				<li class="nav-item"><a class="nav-link"
+					style="cursor: pointer;" id="header-modify-user-data"
+					aria-current="page" onclick="postToServlet('ModifyUserData');">Modificar
+						informacion</a></li>
+
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" id="header-consultation" href="#"
+					role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Consultas </a>
+					<ul class="dropdown-menu">
+
+						<%if (userType.equals("P")) { %>
+						<li class="dropdown-item"><a class="dropdown-item" href="#"
+							onclick="postToServlet('ClassDictationConsultation');">Consulta
+								de dictados de clases</a></li>
+						<%} %>
+						<li class="dropdown-item"><a class="dropdown-item" href="#"
+							onclick="postToServlet('ConsultUserData');">Consultar
+								informacion</a></li>
+						<li class="dropdown-item"><a class="dropdown-item" href="#"
+							onclick="postToServlet('SportActivityConsultation');">Consulta
+								de actividad deportiva</a></li>
+					</ul></li>
+				<%if (userType.equals("P")) { %>
+				<li class="nav-item"><a class="nav-link"
+					style="cursor: pointer;" id="header-add-class" aria-current="page"
+					onclick="postToServlet('AddClass');">Alta de dictado de clase</a></li>
+
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" id="header-ranking" href="#"
+					role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Rankings </a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" href="#"
+							onclick="postToServlet('ClassDictationRanking');">Ranking de
+								dictados de clases</a></li>
+						<li><a class="dropdown-item" href="#"
+							onclick="postToServlet('SportActivitiesRanking');">Ranking de
+								actividades deportivas</a></li>
+					</ul></li>
+
+				<%} %>
+				<%if (userType.equals("M")) { %>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="header-members"
+					role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						Dropdown socios </a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" id="header-register-to-class"
+							role="button" href="#"
+							onclick="postToServlet('RegisterToClass');">Registrarse a
+								dictado de clase</a></li>
+					</ul></li>
+				<%} %>
+
+				<li class="nav-item"><a class="nav-link" href="#"
+					onclick="postToServlet('LogOut');">Cerrar sesion</a></li>
+				<%} %>
+				<li class="nav-item"><a class="nav-link disabled"
+					aria-disabled="true">Ponele voluntad</a></li>
+			</ul>
+			<!--
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form> -->
-    </div>
-  </div>
-  <form id="servletForm"  method="post" style="display: none;">
-	<input type="hidden" name="servletName" id="servletName" value="">
-  </form>
+		</div>
+	</div>
+	<form id="servletForm" method="post" style="display: none;">
+		<input type="hidden" name="servletName" id="servletName" value="">
+	</form>
 </nav>
 
-      <script>
+<script>
       	function setHeaderDisplay(){
       		const url = window.location.href
       		if(url.includes("init")) {
@@ -113,11 +128,13 @@
      		} else if (url.endsWith('ModifyUserData')) {
      			document.getElementById("header-modify-user-data").classList.add("active")
      		} else if (url.endsWith('ConsultUserData')) {
-     			document.getElementById("header-consult-user-data").classList.add("active")
+     			document.getElementById("header-consultation").classList.add("active")
      		} else if (url.endsWith('AddNewUser')) {
           		document.getElementById("header-add-new-user").classList.add("active")
         	} else if (url.endsWith('SportActivityConsultation')) {
-          		document.getElementById("header-sport-activity-consultation").classList.add("active")
+          		document.getElementById("header-consultation").classList.add("active")
+        	} else if (url.endsWith('ClassDictationConsultation')) {
+          		document.getElementById("header-consultation").classList.add("active")
         	} else if (url.endsWith('AddClass')) {
 				document.getElementById('header-add-class').classList.add("active")
             }

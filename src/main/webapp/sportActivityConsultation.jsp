@@ -10,7 +10,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Consulta dictado de clases</title>
+	<title>Consulta de actividad deportiva</title>
 	<%@include file="header.jsp"%>
 </head>
 <body>
@@ -18,7 +18,7 @@
 	Map<String, DtInstitute> institutesList = (Map<String, DtInstitute>) request.getAttribute("institutesList");
 	List<DtClass> classes = (List<DtClass>) request.getAttribute("classes");
 %>
-<h1 align="center">Consulta dictado de clases</h1>
+<h1 align="center">Consulta de actividad deportiva</h1>
 <main class="container">
 	<select class="form-select form-control-sm" id="institute">
 		<option selected disabled value="Sin seleccionar">Sin seleccionar</option>

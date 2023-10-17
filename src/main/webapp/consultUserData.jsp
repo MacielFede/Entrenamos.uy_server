@@ -267,7 +267,7 @@
 		document.getElementById('classSelect').addEventListener('change', (event) => {
 			cleanTables();
 			// Fetch class and activity info -> DISCLAIMER: cambiar el path al servlet segun la compu jiji (el nombre de mi carpeta es Tarea_2, soy Axel)
-			fetch('http://localhost:8080/Tarea_2/ConsultUserData?chosenClass=' + event.target.value,
+			fetch('http://localhost:8080/Entrenamos.uy_server/ConsultUserData?chosenClass=' + event.target.value,
 	        	{	method: 'GET',
 	            	headers: {
 	                'Content-Type': 'application/json',

@@ -151,9 +151,7 @@ document.getElementById('confirmButon').addEventListener('click', (event) => {
 			restartUseCase()
             throw new Error(response.headers.get('error'))
         }
-        return response.json()
-	}).then((data) => {
-		displayAlert(data, "alert-success")
+        displayAlert("Se completó la insctipción satisfactoriamente!", "alert-success")
 		restartUseCase()
 	}).catch((error) => {
         displayAlert(error, 'alert-danger')
