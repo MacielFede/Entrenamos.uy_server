@@ -101,7 +101,7 @@
 					event.target.innerHTML = 'Guardar cambios'
 					event.target.disabled = false
 				} else {
-					fetch("http://localhost:8080/EntrenamosuyWeb/ModifyUserData?modifyUserExecute=ejecuta", {
+					fetch("http://localhost:8080/Entrenamos.uy_server/ModifyUserData?modifyUserExecute=ejecuta", {
 						method: 'POST',
 						headers: {
 							 bornDate: date,
