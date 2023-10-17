@@ -38,19 +38,7 @@
         <li class="nav-item">
           <a class="nav-link" style="cursor: pointer;" id="header-consult-user-data" aria-current="page" onclick="postToServlet('ConsultUserData');">Consultar informacion</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Rankings
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationRanking');">Ranking de dictados de clases</a></li>
-            <li><a class="dropdown-item" href="#" onclick="postToServlet('SportActivitiesRanking');">Ranking de actividades deportivas</a></li> 
-            <!--<li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-          </ul>
-          <li class="nav-item">
-              <a class="nav-link" style="cursor: pointer;" id="header-add-new-user" aria-current="page" onclick="postToServlet('AddNewUser');">Agregar usuario</a>
-          </li>
+        
         </li>
           <li class="nav-item">
               <a class="nav-link" style="cursor: pointer;" id="header-sport-activity-consultation" aria-current="page" onclick="postToServlet('SportActivityConsultation');">Consulta dictado de clase</a>
@@ -66,9 +54,17 @@
 		          </a>
 		          <ul class="dropdown-menu">
 		            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationRanking');">Ranking de dictados de clases</a></li>
-		            <!--<li><a class="dropdown-item" href="#" onclick="postToServlet('SportActivitiesRanking');">Ranking de actividades deportivas</a></li> 
+		            <li><a class="dropdown-item" href="#" onclick="postToServlet('SportActivitiesRanking');">Ranking de actividades deportivas</a></li> 
 		            <li><hr class="dropdown-divider"></li>
-		            <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+		            <li><a class="dropdown-item" href="#">Something else here</a></li>
+		          </ul>
+		        </li>
+		        <li class="nav-item dropdown">
+		          <a class="nav-link dropdown-toggle" id="header-ranking" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		            Consultas
+		          </a>
+		          <ul class="dropdown-menu">
+		            <li><a class="dropdown-item" href="#" onclick="postToServlet('ClassDictationConsultation');">Consulta de dictados de clases</a></li>
 		          </ul>
 		        </li>
 	        <%} %>

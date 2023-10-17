@@ -52,6 +52,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>ClassDictationConsultation</display-name>
+    <servlet-name>ClassDictationConsultation</servlet-name>
+    <servlet-class>servlets.ClassDictationConsultation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClassDictationConsultation</servlet-name>
+    <url-pattern>/ClassDictationConsultation</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>LogIn</display-name>
     <servlet-name>LogIn</servlet-name>
     <servlet-class>servlets.LogIn</servlet-class>
