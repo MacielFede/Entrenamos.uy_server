@@ -1,4 +1,4 @@
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -28,20 +28,20 @@
 			</thead>
 			<tbody>
 				<%
-	  		int i = 1;
-	  		for (DtClass dt : classes) {
-	  	%>
-				<tr>
-					<th scope="row"><%=i%></th>
-					<td><%=dt.getName()%></td>
-					<td><%=dt.getDateAndTime() != null ? dt.getDateAndTime().toString() : ""%></td>
-					<td><%=dt.getUrl()%></td>
-					<td><%=dt.getEnrollmentsQuantity()%></td>
-				</tr>
-				<%
-			i++;
-	  	}
-		%>
+				int i = 1;
+		  		for (DtClass dt : classes) {
+		  	%>
+					<tr>
+						<th scope="row"><%=i%></th>
+						<td><%=dt.getName()%></td>
+						<td><%=dt.getDateAndTime() != null ? dt.getDateAndTime().getTime().toString() : ""%></td>
+						<td><%=dt.getUrl()%></td>
+						<td><%=dt.getEnrollmentsQuantity()%></td>
+					</tr>
+					<%
+				i++;
+		  	}
+			%>
 
 			</tbody>
 		</table>
