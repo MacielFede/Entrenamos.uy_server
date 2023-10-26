@@ -2,7 +2,7 @@ package servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+//import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,15 +11,19 @@ import publishers.UserPublisher;
 import publishers.UserPublisherService;
 import publishers.UserPublisherServiceLocator;
 
+import publishers.DtUser;
+import publishers.DtMember;
+
 import java.io.IOException;
-import java.util.List;
 
 import javax.xml.rpc.ServiceException;
 
+/*
 import dataTypes.DtMember;
 import dataTypes.DtUser;
 import interfaces.ControllerFactory;
 import interfaces.UserInterface;
+*/
 /**
  * Servlet implementation class LogIn
  */
@@ -86,7 +90,7 @@ public class LogIn extends HttpServlet {
 		if (!logErr) {
 			String userType = "P";
 			
-			if (user instanceof publishers.DtMember) {
+			if (user instanceof DtMember) {
 				userType = "M";
 			}
 			
@@ -105,7 +109,7 @@ public class LogIn extends HttpServlet {
 		//response.sendRedirect(redirect);
 	}
 	
-	private publishers.DtUser chooseUser(String userName) throws Exception {
+	private DtUser chooseUser(String userName) throws Exception {
 		try {
 			UserPublisherService ups = new UserPublisherServiceLocator();
 			UserPublisher up = ups.getUserPublisherPort();
