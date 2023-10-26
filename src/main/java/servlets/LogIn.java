@@ -7,9 +7,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import publishers.UserPublisher;
+import publishers.UserPublisherService;
+import publishers.UserPublisherServiceLocator;
 
 import java.io.IOException;
 import java.util.List;
+
+import javax.xml.rpc.ServiceException;
 
 import dataTypes.DtMember;
 import dataTypes.DtUser;
@@ -56,15 +61,22 @@ public class LogIn extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String redirect = "/index.jsp";
 		
+		/* Ya no se usa el .jar manito
 		ControllerFactory controllerFactory = ControllerFactory.getInstance();
 		UserInterface ic = controllerFactory.getUserInterface();
+		*/
 		String userName = (String) request.getParameter("inputUserName");
 		String password = (String) request.getParameter("inputPassword");
-		DtUser user = null;
+		publishers.DtUser user = null;
 		boolean logErr = (userName == null);
 		
 		if(!logErr) {
-			user = ic.chooseUser(userName);
+			try {
+				user = chooseUser(userName);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 			logErr = !(user != null && user.getPassword().equals(password));
 		} else {
 			request.setAttribute("logInErr", "Ingrese datos válidos");
@@ -74,7 +86,7 @@ public class LogIn extends HttpServlet {
 		if (!logErr) {
 			String userType = "P";
 			
-			if (user instanceof DtMember) {
+			if (user instanceof publishers.DtMember) {
 				userType = "M";
 			}
 			
@@ -91,6 +103,17 @@ public class LogIn extends HttpServlet {
 		rd = request.getRequestDispatcher(redirect);
 		rd.forward(request,response);
 		//response.sendRedirect(redirect);
+	}
+	
+	private publishers.DtUser chooseUser(String userName) throws Exception {
+		try {
+			UserPublisherService ups = new UserPublisherServiceLocator();
+			UserPublisher up = ups.getUserPublisherPort();
+			return up.chooseUser(userName);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return null;	
 	}
 
 }

@@ -87,7 +87,7 @@
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#" id="header-members"
 					role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						Dropdown socios </a>
+						Clases </a>
 					<ul class="dropdown-menu">
 						<li><a class="dropdown-item" id="header-register-to-class"
 							role="button" href="#"
