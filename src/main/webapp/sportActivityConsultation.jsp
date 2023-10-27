@@ -1,8 +1,8 @@
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
-<%@ page import="dataTypes.DtInstitute" %>
+<%@ page import="publishers.DtInstitute" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="dataTypes.DtActivity" %>
+<%@ page import="publishers.DtActivity" %>
 <%@ page import="com.google.gson.Gson" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>

@@ -1,10 +1,10 @@
 <%@page import="java.util.Date"%>
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.TreeMap"%>
-<%@page import="dataTypes.DtUser"%>
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtUser"%>
+<%@page import="publishers.DtClass"%>
 
 
 
@@ -208,7 +208,7 @@
 	let currentActivity = {};
 
 	// Init date (can't access java datatypes to script modules)
-	document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getYear() %> + "<%= userInfo.getBornDate() %>".slice(4,10)
+	document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getTime().getYear() %> + "<%= userInfo.getBornDate() %>".slice(4,10)
 	document.getElementById('bornDateInput').max = new Date().toLocaleDateString('fr-ca')
 	
 	// Show alerts

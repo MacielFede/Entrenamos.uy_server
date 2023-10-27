@@ -1,7 +1,7 @@
 <%@page import="java.util.Date"%>
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
-<%@ page import="dataTypes.DtUser" %>
+<%@ page import="publishers.DtUser" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -69,7 +69,7 @@
 	</main>
 	
 	<script>
-		document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getYear() %> + "<%= userInfo.getBornDate() %>".slice(4,10)
+		document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getTime().getYear() %> + "<%= userInfo.getBornDate() %>".slice(4,10)
 		document.getElementById('bornDateInput').max = new Date().toLocaleDateString('fr-ca')
 		
 		function displayAlert(message, alertClass){

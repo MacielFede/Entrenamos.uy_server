@@ -1,4 +1,4 @@
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"

@@ -1,10 +1,10 @@
 <%@page import="java.util.Date"%>
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.TreeMap"%>
-<%@page import="dataTypes.DtUser"%>
-<%@page import="dataTypes.DtInstitute"%>
+<%@page import="publishers.DtUser"%>
+<%@page import="publishers.DtInstitute"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -146,7 +146,7 @@ function restartUseCase(){
 // Fulfill activities select with the institute activities
 document.getElementById('instituteSelect').addEventListener('change', (event) => {
 	document.getElementById("activitySelect").value = 'Sin seleccionar'
-	fetch('http://localhost:8080/Entrenamos.uy_server/AddClass?chosenInstitute=' + event.target.value,
+	fetch('http://localhost:8080/Tarea_2/AddClass?chosenInstitute=' + event.target.value,
         {method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -159,6 +159,7 @@ document.getElementById('instituteSelect').addEventListener('change', (event) =>
         }
         return response.json()
     }).then((data) => {
+        console.log(data)
 		if(data === null || Object.keys(data).length === 0) {
 			displayAlert('El instituto indicado no tiene actividades asociadas', 'alert-info')
 		}
@@ -167,8 +168,9 @@ document.getElementById('instituteSelect').addEventListener('change', (event) =>
 
 		// Add all activities as options
 		let htmlToAppend = '';
-        for(const activity in data) {
-			htmlToAppend += '\n<option>' + activity + '</option>';
+        for(const activity of data) {
+            const { key,value } = activity;
+			htmlToAppend += '\n<option>' + key + '</option>';
 		}
 		document.getElementById('activitySelect').innerHTML += htmlToAppend;
     }).catch((error) => {
@@ -198,7 +200,7 @@ document.getElementById('submitButton').addEventListener('click', (event)=> {
   	}
 
   	// Remember, change path as needed
-  	fetch('http://localhost:8080/Entrenamos.uy_server/AddClass', {
+  	fetch('http://localhost:8080/Tarea_2/AddClass', {
   		method: 'POST',
   		headers: {
  			institute: institute,
