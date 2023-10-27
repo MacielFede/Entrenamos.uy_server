@@ -1,11 +1,6 @@
 package servlets;
 
 import com.google.gson.Gson;
-import dataTypes.DtActivity;
-import dataTypes.DtClass;
-import dataTypes.DtInstitute;
-import interfaces.ControllerFactory;
-import interfaces.InstituteInterface;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,7 +9,18 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Map;
+import java.util.TreeMap;
+
+import publishers.InstitutePublisher;
+import publishers.InstitutePublisherService;
+import publishers.InstitutePublisherServiceLocator;
+import publishers.DtActivity;
+import publishers.DtClass;
+import publishers.DtInstitute;
+
+import javax.xml.rpc.ServiceException;
 
 @WebServlet("/SportActivityConsultation")
 public class SportActivityConsultation extends HttpServlet {
@@ -31,23 +37,21 @@ public class SportActivityConsultation extends HttpServlet {
             response.getWriter().close();
             return;
         }
-        ControllerFactory controllerFactory = ControllerFactory.getInstance();
-        InstituteInterface ic = controllerFactory.getInstance().getInstituteInterface();
 
-        Map<String, DtInstitute> institutesList = ic.listSportInstitutes();
+        Map<String, DtInstitute> institutesList = this.listSportInstitutes();
         String institute = (String) request.getHeader("institute");
         String activity = (String) request.getHeader("activity");
 
         if ((institute != null) &&  (institute != "")) {
             try {
                 if (activity == "" || activity == null) {
-                    Map<String, DtActivity> activities = ic.selectInstitution(institute);
+                    Map<String, DtActivity> activities = this.selectInstitution(institute);
                     Gson gson = new Gson();
                     String json = gson.toJson(activities);
                     response.setContentType("application/json");
                     response.getWriter().write(json);
                 } else {
-                    Map<String, DtClass> classes = ic.chooseActivity(activity);
+                    Map<String, DtClass> classes = this.chooseActivity(activity);
                     Gson gson = new Gson();
                     String json = gson.toJson(classes);
                     response.setContentType("application/json");
@@ -65,4 +69,55 @@ public class SportActivityConsultation extends HttpServlet {
             rd.forward(request,response);
         }
     }
+
+
+
+    private Map<String,DtInstitute> listSportInstitutes() throws RemoteException {
+		Map<String,DtInstitute> institutes = new TreeMap<String,DtInstitute>();
+		try {
+			InstitutePublisherService ips = new InstitutePublisherServiceLocator();
+			InstitutePublisher ip = ips.getInstitutePublisherPort();
+			DtInstitute[] institutesArray = ip.listSportInstitutes();
+			for (int i = 0; i < institutesArray.length; ++i) {
+				institutes.put(institutesArray[i].getName(), institutesArray[i]);
+			}
+		}
+		catch(ServiceException e) {
+			e.printStackTrace();
+		}
+		return institutes;
+	}
+
+	private Map<String, DtActivity> selectInstitution(String instituteName) throws Exception {
+		Map<String,DtActivity> activities = new TreeMap<String,DtActivity>();
+        try {
+			InstitutePublisherService ips = new InstitutePublisherServiceLocator();
+			InstitutePublisher ip = ips.getInstitutePublisherPort();
+			DtActivity[] activitiesArray = ip.selectInstitution(instituteName);
+			for (int i = 0; i < activitiesArray.length; ++i) {
+				activities.put(activitiesArray[i].getName(), activitiesArray[i]);
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return activities;
+	}
+
+    private  Map<String, DtClass> chooseActivity(String activityName) throws Exception {
+    	Map<String,DtClass> classes = new TreeMap<String,DtClass>();
+        try {
+            InstitutePublisherService ips = new InstitutePublisherServiceLocator();
+            InstitutePublisher ip = ips.getInstitutePublisherPort();
+            DtClass[] classesArray = ip.chooseActivity(activityName);
+            for (int i = 0; i < classesArray.length; ++i) {
+				classes.put(classesArray[i].getName(), classesArray[i]);
+			}
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
+        return classes;
+    }
+
+
+    
 }
