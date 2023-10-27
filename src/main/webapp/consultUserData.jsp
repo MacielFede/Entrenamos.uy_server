@@ -5,6 +5,7 @@
 <%@page import="java.util.TreeMap"%>
 <%@page import="publishers.DtUser"%>
 <%@page import="publishers.DtClass"%>
+<%@page import="java.util.Calendar"%>
 
 
 
@@ -208,7 +209,13 @@
 	let currentActivity = {};
 
 	// Init date (can't access java datatypes to script modules)
-	document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getTime().getYear() %> + "<%= userInfo.getBornDate() %>".slice(4,10)
+	let year = <%= userInfo.getBornDate().get(Calendar.YEAR) %>;
+	let month = <%= userInfo.getBornDate().get(Calendar.MONTH) + 1 %>;
+	let day = <%= userInfo.getBornDate().get(Calendar.DAY_OF_MONTH) %>;
+	month = month >= 10 ? month : "0" + month;
+	day = day >= 10 ? day : "0" + day;
+	
+	document.getElementById('bornDateInput').value = year + "-" + month + "-" + day;
 	document.getElementById('bornDateInput').max = new Date().toLocaleDateString('fr-ca')
 	
 	// Show alerts
@@ -267,7 +274,7 @@
 		document.getElementById('classSelect').addEventListener('change', (event) => {
 			cleanTables();
 			// Fetch class and activity info -> DISCLAIMER: cambiar el path al servlet segun la compu jiji (el nombre de mi carpeta es Tarea_2, soy Axel)
-			fetch('http://localhost:8080/Entrenamos.uy_server/ConsultUserData?chosenClass=' + event.target.value,
+			fetch('http://localhost:8080/Tarea_2/ConsultUserData?chosenClass=' + event.target.value,
 	        	{	method: 'GET',
 	            	headers: {
 	                'Content-Type': 'application/json',
@@ -280,6 +287,7 @@
 	        	}
 	        	return response.json()
 	    	}).then((data) => {
+		    	console.log(data)
 	        	// Show class info
 	    		showRelatedClass(data)
 				// Let user reload use case

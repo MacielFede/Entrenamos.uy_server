@@ -2,27 +2,32 @@ package servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import publishers.DtActivity;
+import publishers.DtActivityClassesEntry;
+import publishers.DtClass;
+import publishers.DtProfessor;
+import publishers.DtProfessorRelatedClassesEntry;
+import publishers.DtUser;
+import publishers.InstitutePublisher;
+import publishers.InstitutePublisherService;
+import publishers.InstitutePublisherServiceLocator;
+import publishers.UserPublisher;
+import publishers.UserPublisherService;
+import publishers.UserPublisherServiceLocator;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.google.gson.Gson;
+import javax.xml.rpc.ServiceException;
 
-import dataTypes.DtActivity;
-import dataTypes.DtClass;
-import dataTypes.DtMember;
-import dataTypes.DtProfessor;
-import dataTypes.DtUser;
-import interfaces.ControllerFactory;
-import interfaces.InstituteInterface;
-import interfaces.UserInterface;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class ConsultUserData
@@ -31,9 +36,6 @@ public class ConsultUserData extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	// Activities to fetch from classes
 	private Map<String, DtActivity> activities = new TreeMap<String, DtActivity>();
-	// Controllers
-	private InstituteInterface ic = ControllerFactory.getInstance().getInstituteInterface();
-	private UserInterface uc = ControllerFactory.getInstance().getUserInterface();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -41,7 +43,11 @@ public class ConsultUserData extends HttpServlet {
 	public ConsultUserData() {
 		super();
 		// Get all the activities only once
-		this.activities = ic.getAllActivities();
+		try {
+			this.activities = getAllActivities();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void sendBadResponse(HttpServletResponse res, String message) throws IOException {
@@ -55,7 +61,8 @@ public class ConsultUserData extends HttpServlet {
 		for (Map.Entry<String, DtActivity> entry : activities.entrySet()) {
 			DtActivity activity = entry.getValue();
 			// Get activity classes
-			Map<String, DtClass> currentActivityClasses = activity.getClasses();
+			DtActivityClassesEntry[] currentActivityClassesArray = activity.getClasses();
+			Map<String,DtClass> currentActivityClasses = getClassesMapFromArray(currentActivityClassesArray);
 			for (Map.Entry<String, DtClass> classEntry : currentActivityClasses.entrySet()) {
 				DtClass aClass = classEntry.getValue();
 				if (aClass.getName().equals(className))
@@ -73,7 +80,11 @@ public class ConsultUserData extends HttpServlet {
 		// Get already created session
 		HttpSession session = request.getSession(false);
 		// Get user info
-		DtUser user = uc.chooseUser((String) session.getAttribute("userName"));
+		try {
+			DtUser user = chooseUser((String) session.getAttribute("userName"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		String userType = (String) session.getAttribute("userType");
 		// Get parameters
 		String aClass = request.getParameter("chosenClass");
@@ -90,7 +101,10 @@ public class ConsultUserData extends HttpServlet {
 					// Fill the return object with the class information
 	        		Map<String, String> information = new HashMap<>();
 	        		// Get class info
-	        		DtClass theClass = ic.chooseClassByName(aClass);
+	        		
+	        		System.out.println(aClass);
+	        		DtClass theClass = chooseClassByName(aClass);
+	        		System.out.println(theClass.toString());
 	        		// Get activity from class
 	        		DtActivity relatedActivity = this.getActivityFromClass(aClass);
 	        		// User type
@@ -99,12 +113,24 @@ public class ConsultUserData extends HttpServlet {
 	        		information.put("className", theClass.getName());
 	        		information.put("classUrl", theClass.getUrl());
 	        		information.put("classPrice", relatedActivity.getPrice().toString());
-	        		information.put("classDate", theClass.getDateAndTime().toString());
+	        		// Class date
+	        		String date = theClass.getDateAndTime().get(Calendar.YEAR) 
+	                		+ "-" + 
+	                		(theClass.getDateAndTime().get(Calendar.MONTH) + 1 >= 10 ? theClass.getDateAndTime().get(Calendar.MONTH) + 1 : "0" + (theClass.getDateAndTime().get(Calendar.MONTH) + 1)) 
+	                		+ "-" 
+	                		+ (theClass.getDateAndTime().get(Calendar.DAY_OF_MONTH) >= 10 ? theClass.getDateAndTime().get(Calendar.DAY_OF_MONTH) : "0" + theClass.getDateAndTime().get(Calendar.DAY_OF_MONTH));
+	        		information.put("classDate", date);
 	        		// Activity info
 	        		information.put("activityName", relatedActivity.getName());
 	        		information.put("activityDescription", relatedActivity.getDescription());
-	        		information.put("activityDuration", relatedActivity.getDuration().toString());
-	        		information.put("activityDate", relatedActivity.getRegistryDate().toString());
+	        		information.put("activityDuration", relatedActivity.getDuration().toString());      		
+	        		// Activity date
+	        		String activityDate = relatedActivity.getRegistryDate().get(Calendar.YEAR) 
+	                		+ "-" + 
+	                		(relatedActivity.getRegistryDate().get(Calendar.MONTH) + 1 >= 10 ? relatedActivity.getRegistryDate().get(Calendar.MONTH) + 1 : "0" + (relatedActivity.getRegistryDate().get(Calendar.MONTH) + 1)) 
+	                		+ "-" 
+	                		+ (relatedActivity.getRegistryDate().get(Calendar.DAY_OF_MONTH) >= 10 ? relatedActivity.getRegistryDate().get(Calendar.DAY_OF_MONTH) : "0" + relatedActivity.getRegistryDate().get(Calendar.DAY_OF_MONTH));
+	        		information.put("activityDate", activityDate);
 	        		information.put("activityPrice", relatedActivity.getPrice().toString());
 	        		jsonToReturn = gson.toJson(information);
 				}
@@ -113,6 +139,7 @@ public class ConsultUserData extends HttpServlet {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			this.sendBadResponse(response, "La informacion estaba desactualizada, intentalo de nuevo");
 		}
 		// Send response
@@ -138,17 +165,28 @@ public class ConsultUserData extends HttpServlet {
 		}
 
 		// Get user info
-		DtUser user = uc.chooseUser((String) session.getAttribute("userName"));
+		DtUser user = null;
+		try {
+			user = chooseUser((String) session.getAttribute("userName"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		String userType = (String) session.getAttribute("userType");
 		
 		// If user is member, return related classes
 		if (userType == "M") {
-			Map<String, DtClass> memberClasses = uc.getMemberEnrolledClasses(user.getNickname());
-			request.setAttribute("memberClasses", memberClasses);
+			Map<String, DtClass> memberClasses;
+			try {
+				memberClasses = getMemberEnrolledClasses(user.getNickname());
+				request.setAttribute("memberClasses", memberClasses);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	
 		}
 		// If user is professor, return his classes
 		else if (userType == "P") {
-			Map<String, DtClass> professorClasses = ((DtProfessor) user).getRelatedClasses();
+			DtProfessorRelatedClassesEntry[] professorClassesArray = ((DtProfessor) user).getRelatedClasses();
+			Map<String,DtClass> professorClasses = getProfessorClassesMapFromArray(professorClassesArray);
 			request.setAttribute("professorClasses", professorClasses);
 		}
 		request.setAttribute("userInfo", user);
@@ -156,5 +194,77 @@ public class ConsultUserData extends HttpServlet {
 		rd = request.getRequestDispatcher("/consultUserData.jsp");
 		rd.forward(request, response);
 	}
+	
+	private DtClass chooseClassByName(String className) throws Exception {
+		try {
+			InstitutePublisherService ips = new InstitutePublisherServiceLocator();
+			InstitutePublisher ip = ips.getInstitutePublisherPort();
+			return ip.chooseClassByName(className);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	private Map<String, DtActivity> getAllActivities() throws Exception {
+		Map<String,DtActivity> activities = new TreeMap<String,DtActivity>();
+		try {
+			InstitutePublisherService ups = new InstitutePublisherServiceLocator();
+			InstitutePublisher up = ups.getInstitutePublisherPort();
+			DtActivity[] activitiesArray = up.getAllActivities();
+			for (int i = 0; i < activitiesArray.length; ++i) {
+				activities.put(activitiesArray[i].getName(), activitiesArray[i]);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return activities;
+	}
+	
+	private DtUser chooseUser(String userName) throws Exception {
+		try {
+			UserPublisherService ups = new UserPublisherServiceLocator();
+			UserPublisher up = ups.getUserPublisherPort();
+			return up.chooseUser(userName);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
+	
+	private Map<String, DtClass> getClassesMapFromArray(DtActivityClassesEntry[] classes){
+    	Map<String, DtClass> classesMap = new TreeMap<String, DtClass>();
+    	for (DtActivityClassesEntry cla: classes) {
+    		classesMap.put(cla.getValue().getName(), cla.getValue());
+		}
+    	return classesMap;
+    }
+	
+	private Map<String, DtClass> getProfessorClassesMapFromArray(DtProfessorRelatedClassesEntry[] classes){
+    	Map<String, DtClass> classesMap = new TreeMap<String, DtClass>();
+    	for (DtProfessorRelatedClassesEntry cla: classes) {
+    		classesMap.put(cla.getValue().getName(), cla.getValue());
+		}
+    	return classesMap;
+    }
+	
+	private Map<String, DtClass> getMemberEnrolledClasses(String nickname) throws Exception {
+		Map<String,DtClass> classes = new TreeMap<String,DtClass>();
+		try {
+			UserPublisherService ups = new UserPublisherServiceLocator();
+			UserPublisher up = ups.getUserPublisherPort();
+			DtClass[] classesArray = up.getMemberEnrolledClasses(nickname);
+			for (int i = 0; i < classesArray.length; ++i) {
+				classes.put(classesArray[i].getName(), classesArray[i]);
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return classes;
+	}
+	
+	
 
 }
