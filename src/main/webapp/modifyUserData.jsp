@@ -69,7 +69,7 @@
 	</main>
 	
 	<script>
-		document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getTime().getYear() %> + "<%= userInfo.getBornDate() %>".slice(4,10)
+		document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getTime().getYear() %> + "<%= userInfo.getBornDate().getTime() %>".slice(4,10)
 		document.getElementById('bornDateInput').max = new Date().toLocaleDateString('fr-ca')
 		
 		function displayAlert(message, alertClass){
@@ -101,7 +101,7 @@
 					event.target.innerHTML = 'Guardar cambios'
 					event.target.disabled = false
 				} else {
-					fetch("http://localhost:8080/Entrenamos.uy_server/ModifyUserData?modifyUserExecute=ejecuta", {
+					fetch("http://localhost:8080/Tarea_2/ModifyUserData?modifyUserExecute=ejecuta", {
 						method: 'POST',
 						headers: {
 							 bornDate: date,

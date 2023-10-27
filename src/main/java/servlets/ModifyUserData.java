@@ -2,19 +2,22 @@ package servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
+
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
-import dataTypes.DtClass;
-import dataTypes.DtUser;
-import interfaces.ControllerFactory;
-import interfaces.InstituteInterface;
-import interfaces.UserInterface;
+import publishers.UserPublisher;
+import publishers.DtUser;
+import publishers.DtClass;
+import publishers.UserPublisherServiceLocator;
+import publishers.UserPublisherService;
+
+import javax.xml.rpc.ServiceException;
 
 
 public class ModifyUserData extends HttpServlet {
@@ -33,9 +36,14 @@ public class ModifyUserData extends HttpServlet {
 	        response.getWriter().close();
 	        return;
 		}
-		ControllerFactory controllerFactory = ControllerFactory.getInstance();
-		UserInterface uc = controllerFactory.getUserInterface();
-		DtUser user = uc.chooseUser((String) request.getSession().getAttribute("userName"));
+		
+		DtUser user = null;
+		try {
+			user = chooseUser((String) request.getSession().getAttribute("userName"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		if( request.getParameter("modifyUserExecute") != null) {
         	try {
         		String name = request.getHeader("name");
@@ -45,19 +53,26 @@ public class ModifyUserData extends HttpServlet {
         		String[] dateArray = request.getHeader("bornDate").split("-", 3);
         		
         		if (oldPass.isEmpty() || oldPass == null) {
-        			newPass = uc.chooseUser(user.getNickname()).getPassword();
+        			newPass = user.getPassword();
         		} else {
-        			boolean passwordCheck = oldPass.equals(uc.chooseUser(user.getNickname()).getPassword());
+        			boolean passwordCheck = oldPass.equals(user.getPassword());
         			
         			if(newPass == null || newPass.isEmpty() || !passwordCheck) {
         				throw new Exception("Alguno de los campos de contraseña es invalido, reviselos por favor");
         			}        			
         		}
+        		
+        		int year = Integer.parseInt(dateArray[0]);
+        		int month = Integer.parseInt(dateArray[1]) - 1; // Subtract 1 because Calendar months are 0-based
+        		int day = Integer.parseInt(dateArray[2]);
 
-        		Date date = new Date(Integer.parseInt(dateArray[0]) , Integer.parseInt(dateArray[1]), Integer.parseInt(dateArray[2]));
+        		Calendar date = Calendar.getInstance();
+        		date.set(Calendar.YEAR, year);
+        		date.set(Calendar.MONTH, month);
+        		date.set(Calendar.DAY_OF_MONTH, day);
         		DtUser newUserInfo = new DtUser(user.getNickname(), name, lastName, user.getEmail(), date, newPass);
 
-        		uc.updateUserInfo(newUserInfo);   
+        		this.updateUserInfo(newUserInfo);   
         		response.setStatus(200);
         		response.getWriter().close();
         	} catch (Exception e) {
@@ -70,6 +85,27 @@ public class ModifyUserData extends HttpServlet {
 			RequestDispatcher rd;
 			rd = request.getRequestDispatcher("/modifyUserData.jsp");
 			rd.forward(request,response);			
+		}
+	}
+	
+	private DtUser chooseUser(String userName) throws Exception {
+		try {
+			UserPublisherService ups = new UserPublisherServiceLocator();
+			UserPublisher up = ups.getUserPublisherPort();
+			return up.chooseUser(userName);
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return null;	
+	}
+	
+	private void updateUserInfo(DtUser userUpdated) throws Exception {
+		try {
+			UserPublisherService ups = new UserPublisherServiceLocator();
+			UserPublisher up = ups.getUserPublisherPort();
+			up.updateUserInfo(userUpdated);
+		} catch (ServiceException e) {
+			e.printStackTrace();
 		}
 	}
 
