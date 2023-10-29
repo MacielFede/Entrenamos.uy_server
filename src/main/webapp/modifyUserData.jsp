@@ -1,7 +1,8 @@
 <%@page import="java.util.Date"%>
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
-<%@ page import="dataTypes.DtUser" %>
+<%@page import="java.util.Calendar"%>
+<%@ page import="publishers.DtUser" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -69,7 +70,13 @@
 	</main>
 	
 	<script>
-		document.getElementById('bornDateInput').value = <%= userInfo.getBornDate().getYear() %> + "<%= userInfo.getBornDate() %>".slice(4,10)
+		let year = <%= userInfo.getBornDate().get(Calendar.YEAR) %>;
+		let month = <%= userInfo.getBornDate().get(Calendar.MONTH) + 1 %>;
+		let day = <%= userInfo.getBornDate().get(Calendar.DAY_OF_MONTH) %>;
+		month = month >= 10 ? month : "0" + month;
+		day = day >= 10 ? day : "0" + day;
+
+		document.getElementById('bornDateInput').value = year + "-" + month + "-" + day;
 		document.getElementById('bornDateInput').max = new Date().toLocaleDateString('fr-ca')
 		
 		function displayAlert(message, alertClass){
@@ -101,7 +108,7 @@
 					event.target.innerHTML = 'Guardar cambios'
 					event.target.disabled = false
 				} else {
-					fetch("http://localhost:8080/Entrenamos.uy_server/ModifyUserData?modifyUserExecute=ejecuta", {
+					fetch("http://localhost:8080/Tarea_2/ModifyUserData?modifyUserExecute=ejecuta", {
 						method: 'POST',
 						headers: {
 							 bornDate: date,

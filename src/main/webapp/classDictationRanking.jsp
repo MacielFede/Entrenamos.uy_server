@@ -1,4 +1,4 @@
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -34,7 +34,7 @@
 				<tr>
 					<th scope="row"><%=i%></th>
 					<td><%=dt.getName()%></td>
-					<td><%=dt.getDateAndTime() != null ? dt.getDateAndTime().toString() : ""%></td>
+					<td><%=dt.getDateAndTime() != null ? dt.getDateAndTime().getTime().toString() : ""%></td>
 					<td><%=dt.getUrl()%></td>
 					<td><%=dt.getEnrollmentsQuantity()%></td>
 				</tr>

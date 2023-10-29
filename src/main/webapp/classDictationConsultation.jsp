@@ -1,4 +1,4 @@
-<%@page import="dataTypes.DtInstitute"%>
+<%@page import="publishers.DtInstitute"%>
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>

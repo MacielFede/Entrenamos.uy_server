@@ -1,8 +1,8 @@
-<%@page import="dataTypes.DtClass"%>
+<%@page import="publishers.DtClass"%>
 <%@page import="java.util.List"%>
-<%@ page import="dataTypes.DtInstitute" %>
+<%@ page import="publishers.DtInstitute" %>
 <%@ page import="java.util.Map" %>
-<%@ page import="dataTypes.DtActivity" %>
+<%@ page import="publishers.DtActivity" %>
 <%@ page import="com.google.gson.Gson" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -55,7 +55,7 @@
 		<tr>
 			<th scope="row"><%=i%></th>
 			<td><%=dt.getName()%></td>
-			<td><%=dt.getDateAndTime() != null ? dt.getDateAndTime().toString() : ""%></td>
+			<td><%=dt.getDateAndTime() != null ? dt.getDateAndTime().getTime().toString() : ""%></td>
 			<td><%=dt.getUrl()%></td>
 			<td><%=dt.getEnrollmentsQuantity()%></td>
 		</tr>
@@ -105,67 +105,6 @@
 		}
 	});
 
-	// activitiesSelect.addEventListener("change", async () => {
-	// 	const activity = activitiesSelect.value;
-	// 	if (activity !== "Sin seleccionar") {
-	// 		try {
-	// 			const response = await fetch("SportActivityConsultation", {
-	// 				method: "POST",
-	// 				headers: {
-	// 					"Content-Type": "application/x-www-form-urlencoded",
-	// 					"institute": instituteSelect.value,
-	// 					"activity": activity
-	// 				},
-	// 			});
-	//
-	// 			if (response.ok) {
-	// 				const jsonData = await response.json();
-	// 				const tableBody = document.querySelector(".table tbody");
-	//
-	// 				// Limpiar el contenido existente en la tabla
-	// 				while (tableBody.firstChild) {
-	// 					tableBody.removeChild(tableBody.firstChild);
-	// 				}
-	//
-	// 				let i = 1;
-	// 				for (const key in jsonData) {
-	// 					if (jsonData.hasOwnProperty(key)) {
-	// 						const dt = jsonData[key];
-	//
-	// 						const row = document.createElement("tr");
-	// 						const th = document.createElement("th");
-	// 						th.setAttribute("scope", "row");
-	// 						th.textContent = i;
-	// 						row.appendChild(th);
-	//
-	// 						const tdName = document.createElement("td");
-	// 						tdName.textContent = dt.name;
-	// 						row.appendChild(tdName);
-	//
-	// 						const tdDateAndTime = document.createElement("td");
-	// 						tdDateAndTime.textContent = dt.dateAndTime ? dt.dateAndTime : "";
-	// 						row.appendChild(tdDateAndTime);
-	//
-	// 						const tdUrl = document.createElement("td");
-	// 						tdUrl.textContent = dt.url;
-	// 						row.appendChild(tdUrl);
-	//
-	// 						const tdEnrollmentsQuantity = document.createElement("td");
-	// 						tdEnrollmentsQuantity.textContent = dt.enrollmentsQuantity;
-	// 						row.appendChild(tdEnrollmentsQuantity);
-	//
-	// 						tableBody.appendChild(row);
-	// 						i++;
-	// 					}
-	// 				}
-	// 			} else {
-	// 				console.error("Error en la solicitud POST");
-	// 			}
-	// 		} catch (error) {
-	// 			console.error("Error en la solicitud POST: " + error);
-	// 		}
-	// 	}
-	// });
 	// Crear una referencia a la tabla y su cuerpo
 	const table = document.querySelector(".table");
 	const tableBody = table.querySelector("tbody");
@@ -195,6 +134,8 @@
 					for (const key in jsonData) {
 						if (jsonData.hasOwnProperty(key)) {
 							const dt = jsonData[key];
+							const { dateAndTime } = dt;
+							const { dayOfMonth, month, year } = dateAndTime
 
 							const row = document.createElement("tr");
 							const th = document.createElement("th");
@@ -207,7 +148,7 @@
 							row.appendChild(tdName);
 
 							const tdDateAndTime = document.createElement("td");
-							tdDateAndTime.textContent = dt.dateAndTime ? dt.dateAndTime : "";
+							tdDateAndTime.textContent = dt.dateAndTime ? dayOfMonth + "-" + (month + 1) + "-" + year : "";
 							row.appendChild(tdDateAndTime);
 
 							const tdUrl = document.createElement("td");

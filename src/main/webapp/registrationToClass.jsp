@@ -1,6 +1,6 @@
 <%@ page import="java.util.Map" %>
-<%@ page import="dataTypes.DtInstitute" %>
-<%@ page import="dataTypes.DtActivity" %>
+<%@ page import="publishers.DtInstitute" %>
+<%@ page import="publishers.DtActivity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

@@ -2,16 +2,20 @@ package servlets;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import publishers.DtClass;
+import publishers.InstitutePublisher;
+import publishers.InstitutePublisherService;
+import publishers.InstitutePublisherServiceLocator;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import dataTypes.DtClass;
-import interfaces.ControllerFactory;
-import interfaces.InstituteInterface;
+import javax.xml.rpc.ServiceException;
+import java.rmi.RemoteException;
 
 /**
  * Servlet implementation class ClasDictationRanking
@@ -37,15 +41,27 @@ public class ClassDictationRanking extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ControllerFactory controllerFactory = ControllerFactory.getInstance();
-		InstituteInterface ic = controllerFactory.getInstituteInterface();
-		
-		List<DtClass> classes = ic.listClassesDictationRanking();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+		List<DtClass> classes = listClassesDictationRanking();
 		request.setAttribute("classes", classes);
 		RequestDispatcher rd;
 		rd = request.getRequestDispatcher("/classDictationRanking.jsp");
 		rd.forward(request,response);
+	}
+	
+	private List<DtClass> listClassesDictationRanking() throws RemoteException {
+		List<DtClass> lstClassDictationRanking = new ArrayList<DtClass>();
+		try {
+			InstitutePublisherService ips = new InstitutePublisherServiceLocator();
+			InstitutePublisher ip = ips.getInstitutePublisherPort();
+			DtClass [] classes = ip.listClassesDictationRanking();
+			for (int i = 0; i < classes.length; ++i) {
+				lstClassDictationRanking.add(classes[i]);
+			}
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
+		return lstClassDictationRanking;	
 	}
 
 }
